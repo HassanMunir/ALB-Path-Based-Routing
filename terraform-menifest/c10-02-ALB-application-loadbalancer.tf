@@ -49,13 +49,13 @@ module "alb" {
       # App1 Target Group - Targets
       targets = {
         my_app1_vm1 = {
-          target_id = module.ec2_private.id[0]
+          target_id = module.ec2_private_app1.id[0]
           port      = 80
         },
-        my_app1_vm2 = {
-          target_id = module.ec2_private.id[1]
-          port      = 80
-        }
+        # my_app1_vm2 = {
+        #   target_id = module.ec2_private_app1.id[1]
+        #   port      = 80
+        # }
       }
       tags = local.common_tags # Target Group Tags
     },
@@ -84,60 +84,60 @@ module "alb" {
           target_id = module.ec2_private_app2.id[0]
           port      = 80
         },
-        my_app2_vm2 = {
-          target_id = module.ec2_private_app2.id[1]
-          port      = 80
-        }
+        # my_app2_vm2 = {
+        #   target_id = module.ec2_private_app2.id[1]
+        #   port      = 80
+        # }
       }
       tags = local.common_tags
     }
   ]
 
-  #HTTPS Listener
-  https_listeners = [
-    # HTTPS Listener Index = 0 for HTTPS 443
-    {
-      port            = 443
-      protocol        = "HTTPS"
-      certificate_arn = module.acm.this_acm_certificate_arn
-      action_type     = "fixed-response"
-      fixed_response = {
-        content_type = "text/plain"
-        message_body = "Fixed Static message - for Root Context"
-        status_code  = "200"
-      }
-    },
-  ]
+  # #HTTPS Listener
+  # https_listeners = [
+  #   # HTTPS Listener Index = 0 for HTTPS 443
+  #   {
+  #     port     = 443
+  #     protocol = "HTTPS"
+  #     # certificate_arn = module.acm.this_acm_certificate_arn
+  #     action_type = "fixed-response"
+  #     fixed_response = {
+  #       content_type = "text/plain"
+  #       message_body = "Fixed Static message - for Root Context"
+  #       status_code  = "200"
+  #     }
+  #   },
+  # ]
 
-  # HTTPS Listener Rules
-  https_listener_rules = [
-    # Rule-1: /app1* should go to App1 EC2 Instances
-    {
-      https_listener_index = 0
-      actions = [
-        {
-          type               = "forward"
-          target_group_index = 0
-        }
-      ]
-      conditions = [{
-        path_patterns = ["/app1*"]
-      }]
-    },
-    # Rule-2: /app2* should go to App2 EC2 Instances
-    {
-      https_listener_index = 0
-      actions = [
-        {
-          type               = "forward"
-          target_group_index = 1
-        }
-      ]
-      conditions = [{
-        path_patterns = ["/app2*"]
-      }]
-    }
-  ]
+  # # HTTPS Listener Rules
+  # https_listener_rules = [
+  #   # Rule-1: /app1* should go to App1 EC2 Instances
+  #   {
+  #     https_listener_index = 0
+  #     actions = [
+  #       {
+  #         type               = "forward"
+  #         target_group_index = 0
+  #       }
+  #     ]
+  #     conditions = [{
+  #       path_patterns = ["/app1*"]
+  #     }]
+  #   },
+  #   # Rule-2: /app2* should go to App2 EC2 Instances
+  #   {
+  #     https_listener_index = 0
+  #     actions = [
+  #       {
+  #         type               = "forward"
+  #         target_group_index = 1
+  #       }
+  #     ]
+  #     conditions = [{
+  #       path_patterns = ["/app2*"]
+  #     }]
+  #   }
+  # ]
 
   tags = local.common_tags #ALB Tags
 }
