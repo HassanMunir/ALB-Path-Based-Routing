@@ -9,10 +9,10 @@ output "this_lb_arn" {
   value       = module.alb.this_lb_arn
 }
 
-output "this_lb_dns_name" {
-  description = "The DNS name of the load balancer."
-  value       = module.alb.this_lb_dns_name
-}
+# output "this_lb_dns_name" {
+#   description = "The DNS name of the load balancer."
+#   value       = module.alb.this_lb_dns_name
+# }
 
 output "this_lb_arn_suffix" {
   description = "ARN suffix of our load balancer - can be used with CloudWatch."
@@ -34,15 +34,15 @@ output "http_tcp_listener_ids" {
   value       = module.alb.http_tcp_listener_ids
 }
 
-output "https_listener_arns" {
-  description = "The ARNs of the HTTPS load balancer listeners created."
-  value       = module.alb.https_listener_arns
-}
+# output "https_listener_arns" {
+#   description = "The ARNs of the HTTPS load balancer listeners created."
+#   value       = module.alb.https_listener_arns
+# }
 
-output "https_listener_ids" {
-  description = "The IDs of the load balancer listeners created."
-  value       = module.alb.https_listener_ids
-}
+# output "https_listener_ids" {
+#   description = "The IDs of the load balancer listeners created."
+#   value       = module.alb.https_listener_ids
+# }
 
 output "target_group_arns" {
   description = "ARNs of the target groups. Useful for passing to your Auto Scaling group."
